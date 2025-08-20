@@ -4,9 +4,9 @@ A Task manager made as an assignment.
 
 ## Link for the APK
 
-[Apk Link]()
+[Apk Link](https://drive.google.com/file/d/1Ey7Kz2qWM9rI-qJIErWR1UFVSTDRzgY0/view?usp=drive_link)
 
 ## Screen Recording
 
 - Screen recording of the app showing different functionality.
-[](screen-record-pocket-task.mov)
+![ScreenRecording](pocket_tasks/screen-record-pocket-task.gif)
