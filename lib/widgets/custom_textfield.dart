@@ -4,9 +4,11 @@ class CustomTextfield extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
   final Widget? prefixIcon;
+  final FocusNode focusNode;
   final String? errorText;
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
+  final Function(PointerDownEvent)? onTapOutside;
 
   const CustomTextfield({
     super.key,
@@ -16,11 +18,15 @@ class CustomTextfield extends StatelessWidget {
     this.prefixIcon,
     this.onChanged,
     this.onSubmitted,
+    this.onTapOutside,
+    required this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: focusNode,
+      onTapOutside: onTapOutside,
       controller: controller,
       style: TextStyle(color: Color(0xFFD1A9F9)),
       decoration: InputDecoration(
@@ -40,7 +46,6 @@ class CustomTextfield extends StatelessWidget {
           borderSide: BorderSide(color: Color(0xff452576)),
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        errorText: errorText,
       ),
 
       onChanged: onChanged,

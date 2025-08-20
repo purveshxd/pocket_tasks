@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/task.dart';
@@ -67,7 +68,6 @@ class TaskState {
   }
 }
 
-
 class TaskNotifier extends AutoDisposeNotifier<TaskState> {
   Timer? _debounceTimer;
 
@@ -91,12 +91,25 @@ class TaskNotifier extends AutoDisposeNotifier<TaskState> {
       state = state.copyWith(addTaskError: 'Task title cannot be empty');
       return;
     }
-
+    title = title[0].toUpperCase() + title.substring(1);
     final task = Task(title: title.trim(), done: false);
     final updated = [task, ...state.tasks];
     state = state.copyWith(tasks: updated, addTaskError: null);
     await _saveTasks();
   }
+
+  //! just for add 100 task at once
+  // void addTestTasks() async {
+  //   final taskTitle = "tasks";
+  //   var updated = <Task>[...state.tasks];
+
+  //   for (var i = 0; i <= 50; i++) {
+  //     final task = Task(title: taskTitle + i.toString(), done: false);
+  //     updated = [task, ...state.tasks];
+  //     state = state.copyWith(tasks: updated, addTaskError: null);
+  //   }
+  //   await _saveTasks();
+  // }
 
   void clearAddTaskError() {
     if (state.addTaskError != null) {

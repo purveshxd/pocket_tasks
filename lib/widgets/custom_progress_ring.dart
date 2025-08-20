@@ -6,8 +6,8 @@ class CustomProgressRing extends StatelessWidget {
   final double progress;
   final double size;
   final double strokeWidth;
-  final Color? progressColor;
-  final Color? backgroundColor;
+  final Color progressColor;
+  final Color backgroundColor;
   final int completedTasks;
   final int totalTasks;
 
@@ -16,10 +16,10 @@ class CustomProgressRing extends StatelessWidget {
     required this.progress,
     required this.completedTasks,
     required this.totalTasks,
-    this.size = 50,
+    this.size = 100,
     this.strokeWidth = 8,
-    this.progressColor,
-    this.backgroundColor,
+    required this.progressColor,
+    required this.backgroundColor,
   });
 
   @override
@@ -40,11 +40,8 @@ class CustomProgressRing extends StatelessWidget {
                 painter: _ProgressRingPainter(
                   progress: animatedProgress,
                   strokeWidth: strokeWidth,
-                  progressColor:
-                      progressColor ?? Theme.of(context).primaryColor,
-                  backgroundColor:
-                      backgroundColor ??
-                      Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                  progressColor: progressColor,
+                  backgroundColor: backgroundColor,
                 ),
               );
             },
@@ -52,7 +49,7 @@ class CustomProgressRing extends StatelessWidget {
           Text(
             "$completedTasks/$totalTasks",
             style: TextStyle(
-              fontSize: size * 0.25, // Responsive font size
+              fontSize: size * 0.2,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
@@ -111,9 +108,6 @@ class _ProgressRingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ProgressRingPainter oldDelegate) {
-    return oldDelegate.progress != progress ||
-        oldDelegate.progressColor != progressColor ||
-        oldDelegate.backgroundColor != backgroundColor ||
-        oldDelegate.strokeWidth != strokeWidth;
+    return true;
   }
 }
