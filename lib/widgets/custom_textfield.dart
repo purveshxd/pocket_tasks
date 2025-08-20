@@ -31,6 +31,7 @@ class CustomTextfield extends StatelessWidget {
       style: TextStyle(color: Color(0xFFD1A9F9)),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
+        prefixIconColor: Color(0xff76539a),
         hintText: hintText,
         hintStyle: TextStyle(
           color: Color(0xff76539a),

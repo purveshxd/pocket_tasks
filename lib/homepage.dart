@@ -5,7 +5,7 @@ import 'package:pocket_tasks/providers/task_provider.dart';
 import 'package:pocket_tasks/widgets/custom_chip.dart';
 import 'package:pocket_tasks/widgets/custom_progress_ring.dart';
 import 'package:pocket_tasks/widgets/custom_textfield.dart';
-import 'package:pocket_tasks/widgets/task_item.dart';
+import 'package:pocket_tasks/widgets/task_tile.dart';
 
 class TasksScreen extends ConsumerStatefulWidget {
   const TasksScreen({super.key});
@@ -77,182 +77,191 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
 
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
-      child: Stack(
-        children: [
+      child:
           // App Background Gradient
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Color.fromARGB(255, 61, 19, 108), Color(0xFF1d052d)],
+                begin: Alignment.topRight,
+
+                colors: [
+                  Color.fromARGB(255, 52, 16, 93),
+                  Color.fromARGB(255, 20, 2, 32),
+                ],
               ),
             ),
-          ),
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ).copyWith(top: 8),
-                child: Column(
-                  spacing: 18,
-                  children: [
-                    // header
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: CustomProgressRing(
-                            totalTasks: totalTasks,
-                            completedTasks: state.completedTasksCount,
-                            strokeWidth: 8,
-                            progress: progress,
-                            progressColor: Color(0xFF8cc78f),
-                            backgroundColor: Color(0xFF424758),
-                            size: MediaQuery.of(context).size.width * 0.22,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // notifier.addTestTasks();
-                          },
-                          child: Text(
-                            "PocketTasks",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.085,
-                              fontWeight: FontWeight.w500,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ).copyWith(top: 8),
+                  child: Column(
+                    spacing: 18,
+                    children: [
+                      // header
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: CustomProgressRing(
+                              totalTasks: totalTasks,
+                              completedTasks: state.completedTasksCount,
+                              strokeWidth: 8,
+                              progress: progress,
+                              progressColor: Color(0xFF8cc78f),
+                              backgroundColor: Color(0xFF424758),
+                              size: MediaQuery.of(context).size.width * 0.22,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    // Add Task Section
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      spacing: 16,
-                      children: [
-                        Flexible(
-                          child: CustomTextfield(
-                            focusNode: taskFocusNode,
-                            onTapOutside: (p0) {
-                              taskFocusNode.unfocus();
+                          GestureDetector(
+                            onTap: () {
+                              // notifier.addTestTasks();
                             },
-                            controller: _textController,
-                            hintText: 'Add Task',
-                            errorText: state.addTaskError,
-                            onChanged: (_) => notifier.clearAddTaskError(),
-                            onSubmitted: (value) => _addTask(notifier, state),
-                          ),
-                        ),
-
-                        GestureDetector(
-                          onTap: () => _addTask(notifier, state),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 26,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [Color(0xFF48298a), Color(0xFF321C5B)],
-                              ),
-                            ),
-                            child: const Text(
-                              'Add',
+                            child: Text(
+                              "PocketTasks",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.085,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                      // Add Task Section
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        spacing: 16,
+                        children: [
+                          Flexible(
+                            child: CustomTextfield(
+                              focusNode: taskFocusNode,
+                              onTapOutside: (p0) {
+                                taskFocusNode.unfocus();
+                              },
+                              controller: _textController,
+                              hintText: 'Add Task',
+                              errorText: state.addTaskError,
+                              onChanged: (_) => notifier.clearAddTaskError(),
+                              onSubmitted: (value) => _addTask(notifier, state),
+                            ),
+                          ),
 
-                    // Search Box
-                    CustomTextfield(
-                      focusNode: searchFocusNode,
-                      onTapOutside: (p0) {
-                        searchFocusNode.unfocus();
-                      },
-                      hintText: 'Search',
-                      prefixIcon: Icon(Icons.search),
-                      onChanged: notifier.updateSearchQuery,
-                    ),
+                          GestureDetector(
+                            onTap: () => _addTask(notifier, state),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 26,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Color(0xFF48298a),
+                                    Color(0xFF321C5B),
+                                  ],
+                                ),
+                              ),
+                              child: const Text(
+                                'Add',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
 
-                    // Filter Chips
-                    Row(
-                      spacing: 8,
-                      children: List.generate(
-                        TaskFilter.values.length,
-                        (index) => CustomChip(
-                          label: TaskFilter.values[index].name,
-                          filter: TaskFilter.values[index],
-                          isSelected: TaskFilter.values[index] == state.filter,
-                          onSelected: () {
-                            notifier.setFilter(TaskFilter.values[index]);
-                          },
+                      // Search Box
+                      CustomTextfield(
+                        focusNode: searchFocusNode,
+                        onTapOutside: (p0) {
+                          searchFocusNode.unfocus();
+                        },
+                        hintText: 'Search',
+                        prefixIcon: Icon(Icons.search),
+                        onChanged: notifier.updateSearchQuery,
+                      ),
+
+                      // Filter Chips
+                      Row(
+                        spacing: 8,
+                        children: List.generate(
+                          TaskFilter.values.length,
+                          (index) => CustomChip(
+                            label: TaskFilter.values[index].name,
+                            filter: TaskFilter.values[index],
+                            isSelected:
+                                TaskFilter.values[index] == state.filter,
+                            onSelected: () {
+                              notifier.setFilter(TaskFilter.values[index]);
+                            },
+                          ),
                         ),
                       ),
-                    ),
 
-                    // Tasks List
-                    Expanded(
-                      child: tasks.isEmpty
-                          ? Center(
-                              child: Text(
-                                state.searchQuery.isNotEmpty
-                                    ? 'No tasks found'
-                                    : 'No tasks yet. Add one above!',
-                                style: TextStyle(color: Colors.white),
+                      // Tasks List
+                      Expanded(
+                        child: tasks.isEmpty
+                            ? Center(
+                                child: Text(
+                                  state.searchQuery.isNotEmpty
+                                      ? 'No tasks found'
+                                      : 'No tasks yet. Add one above!',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            : ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                controller: _scrollController,
+                                itemCount: tasks.length,
+                                itemBuilder: (context, index) {
+                                  final task = tasks[index];
+                                  return TaskTile(
+                                    task: task,
+                                    onToggle: () {
+                                      notifier.toggleTask(task.id);
+                                      _showUndoSnackBar(
+                                        task.done
+                                            ? 'Task marked as active'
+                                            : 'Task completed',
+                                        () => notifier.toggleTask(task.id),
+                                      );
+                                    },
+                                    onDelete: () {
+                                      final taskIndex = state.tasks.indexOf(
+                                        task,
+                                      );
+                                      notifier.deleteTask(task.id);
+                                      _showUndoSnackBar(
+                                        'Task deleted',
+                                        () => notifier.restoreTask(
+                                          task,
+                                          taskIndex,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
-                            )
-                          : ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              controller: _scrollController,
-                              itemCount: tasks.length,
-                              itemBuilder: (context, index) {
-                                final task = tasks[index];
-                                return TaskTile(
-                                  task: task,
-                                  onToggle: () {
-                                    notifier.toggleTask(task.id);
-                                    _showUndoSnackBar(
-                                      task.done
-                                          ? 'Task marked as active'
-                                          : 'Task completed',
-                                      () => notifier.toggleTask(task.id),
-                                    );
-                                  },
-                                  onDelete: () {
-                                    final taskIndex = state.tasks.indexOf(task);
-                                    notifier.deleteTask(task.id);
-                                    _showUndoSnackBar(
-                                      'Task deleted',
-                                      () =>
-                                          notifier.restoreTask(task, taskIndex),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
     );
   }
 }
